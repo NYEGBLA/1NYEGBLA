@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyegbla</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- <link rel="stylesheet" href="./style (2).css"> -->
+
+
+    <link rel="stylesheet" href="./bootstrap-4.5.3-dist/">
+    <!-- <link rel="icon" href="./image/logo.png"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,900;1,400&family=Montserrat:wght@900&family=Roboto:ital,wght@0,300;0,400;1,400&family=Sacramento&family=Zen+Dots&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+      <style>
+        /* Basic styling for demonstration */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            background-image: url(./image/CINSYL\ 2.PNG);
+            background-attachment:fixed;
+            background-size: cover;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* comment */
+          /* Add some basic styling for the comment section */
+          .comment-section {
+            width: 400px;
+            margin: 0 auto;
+        }
+        .comment {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+    </style>
+
+
+<!-- PDF LINK -->
+<script src="https://docs.google.com/document/d/1E9GlJ3jNE8591A72Kokjnd1_FTl_CFJ9/edit?usp=drive_link"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script> -->
+</head>
+<body>
+</head>
+<body>
+<div class="container">
+        <h1>Welcome </h1>
+        <div class="product">
+            <div id="googleDocsContainer"></div>
+
+       
+            
+            <img src="./image/CINSYL 2.PNG" alt="Fresh Apples">
+            <!-- <h2>Fresh plantain</h2>
+            <p>Description: Locally grown organic plantain.</p>
+            <p>Price: Ghs 2.99 per gram</p>
+            <p>Available Quantity: 50 grams</p> -->
+            <a href="#comment-form"><button> COMMENT </button></a>
+        </div>
+
+
+    <!-- comment -->
+    <div class="comment-section">
+        <h2>Comments</h2>
+        <!-- Display existing comments here -->
+        <div class="comment">
+            <strong>learn something new?</strong>
+            <p>This is a great comment section. tell us!</p>
+        </div>
+    </div>
+
+    <!-- Comment Form -->
+    <div class="comment-section">
+        <h2>Add a Comment</h2>
+        <form id="comment-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" rows="4" required></textarea><br>
+
+            <input type="submit" value="Submit">
+        </form>
+</div>
+
+
+<script>
+    // JavaScript code to embed Google Docs document using an iframe
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://docs.google.com/document/d/1E9GlJ3jNE8591A72Kokjnd1_FTl_CFJ9/preview';
+    iframe.width = '100%';
+    iframe.height = '600';
+    iframe.frameborder = '0';
+    iframe.style.border = 'none';
+
+    document.getElementById('googleDocsContainer').appendChild(iframe);
+</script>
+
+<script>
+    // JavaScript to handle comment submission
+    document.getElementById("comment-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Get values from the form
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var commentText = document.getElementById("comment").value;
+
+        // Construct an email message
+        var subject = "New Comment from " + name;
+        var message = "Name: " + name + "\nEmail: " + email + "\nComment: " + commentText;
+
+        // Send the email (this example uses the "mailto" protocol, which opens the user's default email client)
+        window.location.href = "mailto:your-email@example.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message);
+
+        // Clear the form fields
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("comment").value = "";
+    });
+</script>
+
+<!-- PDF -->
+    <script>
+        // URL to your PDF file
+        var pdfUrl = 'your-pdf-file.pdf';
+
+        // Asynchronous download of PDF
+        var loadingTask = pdfjsLib.getDocument(pdfUrl);
+
+        loadingTask.promise.then(function(pdf) {
+            // Fetch the first page
+            return pdf.getPage(1);
+        }).then(function(page) {
+            // Create a viewport that fits the container div
+            var container = document.getElementById('pdf-container');
+            var viewport = page.getViewport({ scale: 1.5 });
+
+            // Prepare the canvas element
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Append the canvas to the container
+            container.appendChild(canvas);
+
+            // Render the page on the canvas
+            page.render({ canvasContext: context, viewport: viewport });
+        });
+    </script>
+</body>
+</html>
